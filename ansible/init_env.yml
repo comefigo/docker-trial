@@ -1,0 +1,23 @@
+---
+- name: Create EC2 instance
+  hosts: localhost
+  connection: local
+  gather_facts: False
+  roles:
+    - role: ./roles/aws_auth_setup
+    - role: ./roles/ec2
+  tasks:
+    - name: "set host from _instance_result"
+      add_host:
+        name: "{{ item.public_ip }}"
+        group: "docker-trial"
+      with_items: "{{ _instance_result.instances }}"
+
+- name: Init docker trial env
+  hosts: "docker-trial"
+  vars:
+    ansible_user: "{{ global.aws.ec2.work_user }}"
+    ansible_ssh_private_key_file: "~/.ssh/{{ global.aws.ec2.key_name }}.pem"
+  roles:
+    - role: ./roles/docker
+    - role: ./roles/init_trial

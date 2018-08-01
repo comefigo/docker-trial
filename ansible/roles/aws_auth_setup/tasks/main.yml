@@ -1,0 +1,17 @@
+---
+- name: make .aws dir
+  file:
+    dest: "~/.aws"
+    state: directory
+
+- name: set aws cli config file
+  template:
+    src: aws_config.j2.conf
+    dest: "~/.aws/config"
+    mode: u=rw,g=,o=
+  
+- name: set aws cli credential file
+  template:
+    src: "aws_credentials.j2.conf"
+    dest: "~/.aws/credentials"
+    mode: u=rw,g=,o=

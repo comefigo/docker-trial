@@ -1,0 +1,40 @@
+---
+- name: update to latest packages
+  yum:
+    name: "*"
+    state: latest
+  become: yes
+
+- name: install docker
+  yum:
+    name: docker
+    state: present
+  become: yes
+
+- name: start docker service
+  service:
+    name: docker
+    state: started
+    enabled: yes
+    use: service
+  become: yes
+
+- name: add work user into Docker group
+  user:
+    name: "{{ global.aws.ec2.work_user }}"
+    groups:
+      - docker
+  become: yes
+
+- name: get docker compose
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/1.22.0/docker-compose-Linux-x86_64"
+    dest: "/usr/local/bin/docker-compose"
+    mode: u=rwx,g=rx,o=rx
+  become: yes
+
+- name: "check docker compose version"
+  command: "docker-compose --version"
+  register: _docker_compose_version
+
+- debug: var=_docker_compose_version

@@ -1,0 +1,24 @@
+---
+- name: create work directory
+  file:
+    dest: "~/docker-trial"
+    owner: "{{ global.aws.ec2.work_user }}"
+    group: "{{ global.aws.ec2.work_user }}"
+    mode: u=rwx,g=rwx,o=rx
+    state: directory
+
+- name: copy trial resources
+  copy: 
+    src: web_server_exp
+    dest: "~/docker-trial/web_server_exp"
+    owner: "{{ global.aws.ec2.work_user }}"
+    group: "{{ global.aws.ec2.work_user }}"
+    mode: u=rwx,g=rwx,o=rx
+
+- name: copy trial resources
+  copy: 
+    src: docker_compose_exp
+    dest: "~/docker-trial/docker_compose_exp"
+    owner: "{{ global.aws.ec2.work_user }}"
+    group: "{{ global.aws.ec2.work_user }}"
+    mode: u=rwx,g=rwx,o=rx

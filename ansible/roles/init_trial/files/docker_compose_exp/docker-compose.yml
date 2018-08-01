@@ -1,0 +1,18 @@
+version: "3.2"
+services: 
+  webserver:
+    image: wordpress
+    ports:
+      - "80:80"
+    links:
+      - "dbserver:mysql"
+
+  dbserver:
+    image: mysql
+    volumes:
+      - "db-data:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+
+volumes: 
+  db-data:

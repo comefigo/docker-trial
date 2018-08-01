@@ -1,0 +1,13 @@
+version: "3.2"
+services:
+  cwf-saas-ansible:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: docker-trial-ansible
+    container_name: docker-trial-ansible
+    hostname: docker-trial-ansible
+    volumes:
+      - ./ansible:/ansible
+    env_file: 
+      - common.env

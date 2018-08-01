@@ -1,0 +1,32 @@
+---
+- name: create ec2 instance
+  ec2:
+    key_name: "{{ global.aws.ec2.key_name }}"
+    instance_type: "t2.micro"
+    image: "ami-e99f4896"
+    region: "{{ global.aws.all.region }}"
+    wait: yes
+    group_id: 
+      - "sg-0be1e00b01f6e7c15"
+    count: "{{ global.aws.ec2.number_of }}"
+    state: present
+    vpc_subnet_id: "subnet-2b217573"
+    assign_public_ip: yes
+    termination_protection: no
+    instance_tags:
+      Name: "docker trial"
+    volumes:
+      - device_name: /dev/xvda
+        volume_type: "gp2"
+        volume_size: "8"
+        delete_on_termination: true
+  register: _instance_result
+
+# SSHポートが疎通できるようになるまで待機
+- name: wait new instance is available
+  wait_for:
+    timeout: "300"
+    host: "{{ item.public_ip }}"
+    port: 22
+    state: present
+  with_items: "{{ _instance_result.instances }}"
