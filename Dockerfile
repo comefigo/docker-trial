@@ -24,7 +24,7 @@ RUN yum install -y initscripts
 # copy ssh keys
 ADD ./ansible/keys/ /root/.ssh/
 RUN chmod 700 /root/.ssh
-RUN chmod 600 /root/.ssh/*
+RUN chmod 600 -R /root/.ssh/
 
 # change work dir
 RUN mkdir /ansible
