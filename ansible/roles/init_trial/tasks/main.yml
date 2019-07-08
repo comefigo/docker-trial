@@ -22,3 +22,35 @@
     owner: "{{ global.aws.ec2.work_user }}"
     group: "{{ global.aws.ec2.work_user }}"
     mode: u=rwx,g=rwx,o=rx
+
+- name: create work directory for v5
+  file:
+    dest: "~/docker-trial/cwf-v5"
+    owner: "{{ global.aws.ec2.work_user }}"
+    group: "{{ global.aws.ec2.work_user }}"
+    mode: u=rwx,g=rwx,o=rx
+    state: directory
+
+- name: unarchive cwf-v5
+  unarchive:
+    src: "cwf-v5.zip"
+    dest: "~/docker-trial/cwf-v5/"
+    owner: "{{ global.aws.ec2.work_user }}"
+    group: "{{ global.aws.ec2.work_user }}"
+    mode: u=rwx,g=rwx,o=rx
+
+- name: create work directory for v4
+  file:
+    dest: "~/docker-trial/cwf-v4"
+    owner: "{{ global.aws.ec2.work_user }}"
+    group: "{{ global.aws.ec2.work_user }}"
+    mode: u=rwx,g=rwx,o=rx
+    state: directory
+
+- name: unarchive cwf-v4
+  unarchive:
+    src: "cwf-v4.zip"
+    dest: "~/docker-trial/cwf-v4/"
+    owner: "{{ global.aws.ec2.work_user }}"
+    group: "{{ global.aws.ec2.work_user }}"
+    mode: u=rwx,g=rwx,o=rx
