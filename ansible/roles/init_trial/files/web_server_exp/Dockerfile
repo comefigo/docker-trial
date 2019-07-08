@@ -5,7 +5,7 @@ FROM centos:centos6
 RUN yum install -y httpd
 
 # ファイルをコピー
-COPY ./htdocs/test.html /usr/local/apache2/htdocs/
+COPY ./htdocs/test.html /var/www/html
 
 # 80番ポート
 EXPOSE 80
